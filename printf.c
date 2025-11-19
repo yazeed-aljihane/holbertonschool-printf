@@ -65,40 +65,42 @@ void PrintString(va_list *args, int *totalb)
  */
 int _printf(const char *format, ...)
 {
-int i, j;
+int i, j, totalb = 0, check = 0;
 va_list args;
-int totalb = 0;
 char Percent = '%';
-type tp[] = {{'c', PrintChar}, {'s', PrintString}};
+type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'\0', NULL}};
 va_start(args, format);
 for (i = 0; format && format[i]; i++)
 {
 	if (format[i] == '%')
 	{
+	if (format[i + 1] == '%')
+	{
+		write(1, &Percent, 1);
+		totalb += 1;
+		i++;
+		continue;
+	}
 		j = 0;
-		while (j < 2)
+		while (tp[j].s != '\0')
 		{
 			if (format[i + 1] == tp[j].s)
 			{
 				tp[j].fun(&args, &totalb);
-				i += 2;
+				i++;
+				check = 1;
 				break;
 			}
-			else if (format[i + 1] == '%')
-			{
-				write(1, &Percent, 1);
-				totalb += 1;
-				i += 2;
-				break;
-			}
+
 		j++;
 		}
+}
+	if (check == 0)
+	{
 		write(1, &format[i], 1);
 		totalb += 1;
-		continue;
 	}
-		write(1, &format[i], 1);
-		totalb += 1;
+	check = 0;
 }
 va_end(args);
 return (totalb);
