@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
+#define BUF_SIZE 12
 
 
 
@@ -51,6 +51,19 @@ void PrintString(va_list *args, int *totalb)
 	}
 }
 
+void PrintNumber(va_list *args, int *totalb)
+{
+int n = va_arg(*args, int);
+char buffer [BUF_SIZE];
+int length;
+
+length = snprintf(buffer, BUF_SIZE, "%d", n);
+if (length > 0)
+{
+write(1, buffer, length);
+*totalb += length;
+}
+}
 
 
 /**
@@ -68,7 +81,7 @@ int _printf(const char *format, ...)
 int i, j, totalb = 0, check = 0;
 va_list args;
 char Percent = '%';
-type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'\0', NULL}};
+type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'\0', NULL}};
 
 if (format == NULL)
 	return (-1);
