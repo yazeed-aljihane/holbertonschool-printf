@@ -69,6 +69,9 @@ int i, j, totalb = 0, check = 0;
 va_list args;
 char Percent = '%';
 type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'\0', NULL}};
+
+if (format == NULL)
+	return (-1);
 va_start(args, format);
 for (i = 0; format && format[i]; i++)
 {
