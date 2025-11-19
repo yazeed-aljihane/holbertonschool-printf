@@ -11,7 +11,7 @@ int main(void)
 {
 	int len;
 
-	len = _printf("Hello %c World %s!\n", 'f', "sdfsdfsdfsd");
+	len = printf("%");
 	printf("\n_ printf returned: %d\n", len);
 	_printf("Character:[%c]\n", 'g');
 	_printf("NULL Character:[%c]\n", NULL);

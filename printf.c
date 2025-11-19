@@ -78,10 +78,7 @@ for (i = 0; format && format[i]; i++)
 	if (format[i] == '%')
 	{
 	if (format[i + 1] == '\0')
-	{
-		check = 1;
-		i++;
-	}
+	return (-1);
 	if (format[i + 1] == '%')
 	{
 		write(1, &Percent, 1);
