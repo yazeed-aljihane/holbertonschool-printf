@@ -19,6 +19,7 @@
 void PrintChar(va_list *args, int *totalb)
 {
 	char c  = va_arg(*args, int);
+
 	write(1, &c, 1);
 	*totalb += 1;
 }
@@ -36,6 +37,7 @@ void PrintChar(va_list *args, int *totalb)
 void PrintString(va_list *args, int *totalb)
 {
 	char *string = va_arg(*args, char*);
+
 	write(1, string, strlen(string));
 	*totalb += strlen(string);
 }
@@ -57,6 +59,7 @@ int i, j;
 va_list args;
 int totalb = 0;
 int check = 0;
+char Percent = '%';
 type tp[] = {
 {'c', PrintChar},
 {'s', PrintString}
@@ -79,6 +82,12 @@ while (format && format[i])
 				break;
 			}
 		j++;
+		}
+		if (format[i + 1] == '%')
+		{
+			write(1, &Percent, 1);
+			totalb += 1;
+			i+= 2;
 		}
 	}
 	if (check == 0)
