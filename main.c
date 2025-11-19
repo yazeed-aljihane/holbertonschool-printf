@@ -10,11 +10,12 @@
 int main(void)
 {
 	int len;
-	len = _printf("Hello %c World %s!\n", NULL, NULL);
+
+	len = _printf("Hello %c World %s!\n", 'f', "sdfsdfsdfsd");
 	printf("\n_ printf returned: %d\n", len);
-	_printf("Character:[%c]\n", NULL);
-	printf("printf Character:[%c]\n", NULL);
-	_printf("String:[%s]\n", NULL);
-	printf("printf String:[%s]\n", NULL);
+	_printf("Character:[%c]\n", 'g');
+	_printf("NULL Character:[%c]\n", NULL);
+	_printf("NULL String:[%s]\n", NULL);
+	_printf("String:[%s]\n", "sdffgdfgdfdfgdf");
 return (0);
 }

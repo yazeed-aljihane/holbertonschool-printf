@@ -24,8 +24,6 @@ void PrintChar(va_list *args, int *totalb)
 	*totalb += 1;
 }
 
-
-
 /**
  * PrintString - Prints a string from a va_list
  * @args: Pointer to the va_list containing the string
@@ -39,7 +37,8 @@ void PrintString(va_list *args, int *totalb)
 	char *string = va_arg(*args, char*);
 	char *n = "(null)";
 	int length;
-	if(string == NULL)
+
+	if (string == NULL)
 	{
 	write(1, n, strlen(n));
 	*totalb += strlen(n);
@@ -51,6 +50,7 @@ void PrintString(va_list *args, int *totalb)
 	*totalb += length;
 	}
 }
+
 
 
 /**
@@ -68,16 +68,10 @@ int _printf(const char *format, ...)
 int i, j;
 va_list args;
 int totalb = 0;
-int check = 0;
 char Percent = '%';
-type tp[] = {
-{'c', PrintChar},
-{'s', PrintString}
-};
-
+type tp[] = {{'c', PrintChar}, {'s', PrintString}};
 va_start(args, format);
-i = 0;
-while (format && format[i])
+for (i = 0; format && format[i]; i++)
 {
 	if (format[i] == '%')
 	{
@@ -88,26 +82,23 @@ while (format && format[i])
 			{
 				tp[j].fun(&args, &totalb);
 				i += 2;
-				check = 1;
+				break;
+			}
+			else if (format[i + 1] == '%')
+			{
+				write(1, &Percent, 1);
+				totalb += 1;
+				i += 2;
 				break;
 			}
 		j++;
 		}
-		if (format[i + 1] == '%')
-		{
-			write(1, &Percent, 1);
-			totalb += 1;
-			check = 1;
-			i+= 2;
-		}
-	}
-	if (check == 0)
-	{
 		write(1, &format[i], 1);
 		totalb += 1;
-		i++;
+		continue;
 	}
-check = 0;
+		write(1, &format[i], 1);
+		totalb += 1;
 }
 va_end(args);
 return (totalb);
