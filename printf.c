@@ -37,9 +37,19 @@ void PrintChar(va_list *args, int *totalb)
 void PrintString(va_list *args, int *totalb)
 {
 	char *string = va_arg(*args, char*);
-
-	write(1, string, strlen(string));
-	*totalb += strlen(string);
+	char *n = "(null)";
+	int length;
+	if(string == NULL)
+	{
+	write(1, n, strlen(n));
+	*totalb += strlen(n);
+	}
+	else
+	{
+	length = strlen(string);
+	write(1, string, length);
+	*totalb += length;
+	}
 }
 
 
@@ -87,6 +97,7 @@ while (format && format[i])
 		{
 			write(1, &Percent, 1);
 			totalb += 1;
+			check = 1;
 			i+= 2;
 		}
 	}

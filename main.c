@@ -1,7 +1,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include "main.h"
-
+#include <stdlib.h>
 /**
  * main - Entry point
  *
@@ -9,9 +9,12 @@
  */
 int main(void)
 {
-	_printf("Character:[%%]\n", 'H');
-	printf("printf Character:[%%]\n");
-	_printf("String:[%s]\n", "I am a string !");
-	printf("printf String:[%s]\n", "I am a string !");
+	int len;
+	len = _printf("Hello %c World %s!\n", NULL, NULL);
+	printf("\n_ printf returned: %d\n", len);
+	_printf("Character:[%c]\n", NULL);
+	printf("printf Character:[%c]\n", NULL);
+	_printf("String:[%s]\n", NULL);
+	printf("printf String:[%s]\n", NULL);
 return (0);
 }
