@@ -114,8 +114,10 @@ for (i = 0; format && format[i]; i++)
 	if (format[i] == '%')
 	{
 	if (format[i + 1] == '\0')
+	{
 	va_end(args);
 	return (-1);
+	}
 	if (format[i + 1] == '%')
 	{
 		write(1, &Percent, 1);
@@ -136,13 +138,20 @@ for (i = 0; format && format[i]; i++)
 
 		j++;
 		}
-}
 	if (check == 0)
 	{
-		write(1, &format[i], 1);
-		totalb += 1;
+	write(1, &format[i], 1);
+	write(1, &format[i + 1], 1);
+	totalb += 2;
+	i++;
 	}
 	check = 0;
+}
+else
+{
+write(1, &format[i], 1);
+totalb += 1;
+}
 }
 va_end(args);
 return (totalb);
