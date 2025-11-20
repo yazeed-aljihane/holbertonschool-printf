@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#define BUF_SIZE 12
+#define BUF_SIZE 33
 
 
 
@@ -54,7 +54,7 @@ void PrintString(va_list *args, int *totalb)
 void PrintNumber(va_list *args, int *totalb)
 {
 int n = va_arg(*args, int);
-char buffer [BUF_SIZE];
+char buffer[BUF_SIZE];
 int length;
 
 length = snprintf(buffer, BUF_SIZE, "%d", n);
@@ -65,6 +65,29 @@ write(1, buffer, length);
 }
 }
 
+void PrintBinary(va_list *args, int *totalb)
+{
+int i = 0, j;
+unsigned int number = va_arg(*args, unsigned int);
+char buffer[BUF_SIZE];
+if (number == 0)
+{
+write(1, "0", 1);
+*totalb += 1;
+return;
+}
+while (number > 0)
+{
+buffer[i++] = (number % 2) + '0';
+number /= 2;
+}
+
+for (j = i - 1; j >= 0; j--)
+{
+write(1, &buffer[j], 1);
+*totalb += 1;
+}
+}
 
 /**
  * _printf - Custom printf function supporting %c and %s
@@ -81,7 +104,7 @@ int _printf(const char *format, ...)
 int i, j, totalb = 0, check = 0;
 va_list args;
 char Percent = '%';
-type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'\0', NULL}};
+type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'b', PrintBinary}, {'\0', NULL}};
 
 if (format == NULL)
 	return (-1);
@@ -91,6 +114,7 @@ for (i = 0; format && format[i]; i++)
 	if (format[i] == '%')
 	{
 	if (format[i + 1] == '\0')
+	va_end(args);
 	return (-1);
 	if (format[i + 1] == '%')
 	{

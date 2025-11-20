@@ -43,4 +43,5 @@ void PrintChar(va_list *args, int *totalb);
  */
 void PrintString(va_list *args, int *totalb);
 
+void PrintBinary(va_list *args, int *totalb);
 #endif
