@@ -104,7 +104,8 @@ int _printf(const char *format, ...)
 int i, j, totalb = 0, check = 0;
 va_list args;
 char Percent = '%';
-type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'b', PrintBinary}, {'\0', NULL}};
+type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'b', PrintBinary},{'u', PrintUdecmile},
+{'o', PrintOctal},{'X', PrintHexCp}, {'x', PrintHexSm} ,{'\0', NULL}};
 
 if (format == NULL)
 	return (-1);

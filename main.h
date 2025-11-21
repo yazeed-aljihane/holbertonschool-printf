@@ -44,4 +44,19 @@ void PrintChar(va_list *args, int *totalb);
 void PrintString(va_list *args, int *totalb);
 
 void PrintBinary(va_list *args, int *totalb);
+
+void PrintUdecmile(va_list *args, int *totalb);
+
+void PrintOctal (va_list *args, int *totalb);
+
+void PrintHexCp (va_list *args, int *totalb);
+
+void PrintHexSm (va_list *args, int *totalb);
+
+typedef struct hex
+{
+char letter;
+int number;
+}hex;
+
 #endif
