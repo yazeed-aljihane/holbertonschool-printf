@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-#define BUF_SIZE 33
+#define BUF_SIZE 1024
 
 
 
@@ -16,11 +16,16 @@
  * Extracts the next argument as an int, writes it as a character
  * to standard output, and increments totalb by 1.
  */
-void PrintChar(va_list *args, int *totalb)
+void PrintChar(va_list *args, int *totalb, char *buffer ,int *index)
 {
 	char c  = va_arg(*args, int);
-
-	write(1, &c, 1);
+if (*index == 1024)
+{
+write(1,buffer,*index);
+*index = 0;
+}
+	buffer[*index] = c;
+	(*index)++;
 	*totalb += 1;
 }
 
@@ -32,47 +37,120 @@ void PrintChar(va_list *args, int *totalb)
  * Extracts the next argument as a string, writes it to standard output,
  * and increments totalb by the string length.
  */
-void PrintString(va_list *args, int *totalb)
+void PrintString(va_list *args, int *totalb, char *buffer ,int *index)
 {
+	
+unsigned int i;
 	char *string = va_arg(*args, char*);
 	char *n = "(null)";
-	int length;
 
+if (*index == 1024)
+           {
+           write(1,buffer,*index);
+           *index = 0;
+           }
 	if (string == NULL)
 	{
-	write(1, n, strlen(n));
-	*totalb += strlen(n);
+	for (i = 0; i < strlen(n);i++)
+	{
+		if (*index == 1024)
+		{
+		write(1,buffer,*index);
+		*index = 0;
+		}
+		buffer[*index] = n[i];
+		(*index)++;
+		*totalb += 1;
+		}
 	}
 	else
 	{
-	length = strlen(string);
-	write(1, string, length);
-	*totalb += length;
-	}
+
+for (i = 0; i < strlen(string);i++)
+{
+if (*index == 1024)
+{
+write(1,buffer,*index);
+*index = 0;
+}
+buffer[*index] = string[i];
+(*index)++;
+*totalb += 1;
+}
+}
 }
 
-void PrintNumber(va_list *args, int *totalb)
+	
+
+
+void PrintNumber(va_list *args, int *totalb, char *bufferr ,int *index)
 {
-int n = va_arg(*args, int);
+int i = 0, j;
+int number = va_arg(*args, int);
 char buffer[BUF_SIZE];
-int length;
-
-length = snprintf(buffer, BUF_SIZE, "%d", n);
-if (length > 0)
+unsigned int abs;
+if (*index == 1024)
 {
-write(1, buffer, length);
-*totalb += length;
+write(1, bufferr, *index);
+*index = 0;
+}
+if (number == 0)
+{
+bufferr[*index] = '0';
+(*index)++;
+*totalb += 1;
+return;
+}
+if (number < 0)
+{
+if (*index == 1024)
+{
+write(1, bufferr,*index);
+*index = 0;
+}
+bufferr[*index] = '-';
+(*index)++;
+*totalb += 1;
+abs = -number;
+}
+else
+{
+abs = number;
+}
+while (abs > 0)
+{
+buffer[i++] = (abs % 10) + '0';
+abs /= 10;
+}
+
+for (j = i - 1; j >= 0; j--)
+{
+if (*index == 1024)
+{
+write(1, bufferr, *index);
+*index = 0;
+}
+bufferr[*index] =buffer[j];
+(*index)++;
+*totalb += 1;
 }
 }
 
-void PrintBinary(va_list *args, int *totalb)
+void PrintBinary(va_list *args, int *totalb, char *bufferr ,int *index)
 {
 int i = 0, j;
 unsigned int number = va_arg(*args, unsigned int);
 char buffer[BUF_SIZE];
+
+if (*index == 1024)
+{
+write(1, bufferr, *index);
+*index = 0;
+}
 if (number == 0)
 {
-write(1, "0", 1);
+bufferr[*index] = '0';
+(*index)++;
 *totalb += 1;
 return;
 }
@@ -84,7 +162,13 @@ number /= 2;
 
 for (j = i - 1; j >= 0; j--)
 {
-write(1, &buffer[j], 1);
+	if (*index == 1024)
+	{
+write(1, bufferr, *index);
+*index = 0;
+	}
+bufferr[*index] =buffer[j];
+(*index)++;
 *totalb += 1;
 }
 }
@@ -104,6 +188,9 @@ int _printf(const char *format, ...)
 int i, j, totalb = 0, check = 0;
 va_list args;
 char Percent = '%';
+char buffer[BUF_SIZE];
+int index = 0;
+
 type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'b', PrintBinary},{'u', PrintUdecmile},
 {'o', PrintOctal},{'X', PrintHexCp}, {'x', PrintHexSm} ,{'\0', NULL}};
 
@@ -112,6 +199,11 @@ if (format == NULL)
 va_start(args, format);
 for (i = 0; format && format[i]; i++)
 {
+	if (index == 1024)
+	{
+		write(1,buffer,index);
+		index = 0;
+	}
 	if (format[i] == '%')
 	{
 	if (format[i + 1] == '\0')
@@ -121,7 +213,7 @@ for (i = 0; format && format[i]; i++)
 	}
 	if (format[i + 1] == '%')
 	{
-		write(1, &Percent, 1);
+		buffer[index++] = Percent;
 		totalb += 1;
 		i++;
 		continue;
@@ -131,7 +223,7 @@ for (i = 0; format && format[i]; i++)
 		{
 			if (format[i + 1] == tp[j].s)
 			{
-				tp[j].fun(&args, &totalb);
+				tp[j].fun(&args, &totalb,buffer,&index);
 				i++;
 				check = 1;
 				break;
@@ -140,9 +232,14 @@ for (i = 0; format && format[i]; i++)
 		j++;
 		}
 	if (check == 0)
-	{
-	write(1, &format[i], 1);
-	write(1, &format[i + 1], 1);
+{
+if (index == 1023)
+{
+write(1,buffer,index);
+index = 0;
+}
+	buffer[index++] = format[i];
+	buffer[index++] = format[i + 1];
 	totalb += 2;
 	i++;
 	}
@@ -150,10 +247,13 @@ for (i = 0; format && format[i]; i++)
 }
 else
 {
-write(1, &format[i], 1);
+buffer[index++] = format[i];
 totalb += 1;
 }
 }
+if (index > 0)
+write(1,buffer,index);
+
 va_end(args);
 return (totalb);
 }

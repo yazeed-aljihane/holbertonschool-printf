@@ -26,7 +26,7 @@ int _printf(const char *format, ...);
 typedef struct type
 {
 char s;
-void (*fun)(va_list*, int*);
+void (*fun)(va_list*, int*,char*,int*);
 } type;
 
 /**
@@ -34,24 +34,24 @@ void (*fun)(va_list*, int*);
  * @args: Pointer to the va_list containing the character
  * @totalb: Pointer to an integer counting total bytes printed
  */
-void PrintChar(va_list *args, int *totalb);
+void PrintChar(va_list *args, int *totalb, char *buffer ,int *index);
 
 /**
  * PrintString - Prints a string from a va_list
  * @args: Pointer to the va_list containing the string
  * @totalb: Pointer to an integer counting total bytes printed
  */
-void PrintString(va_list *args, int *totalb);
+void PrintString(va_list *args, int *totalb, char *buffer ,int *index);
 
-void PrintBinary(va_list *args, int *totalb);
+void PrintBinary(va_list *args, int *totalb, char *buffer ,int *index);
 
-void PrintUdecmile(va_list *args, int *totalb);
+void PrintUdecmile(va_list *args, int *totalb, char *buffer ,int *index);
 
-void PrintOctal (va_list *args, int *totalb);
+void PrintOctal (va_list *args, int *totalb, char *buffer ,int *index);
 
-void PrintHexCp (va_list *args, int *totalb);
+void PrintHexCp (va_list *args, int *totalb, char *buffer ,int *index);
 
-void PrintHexSm (va_list *args, int *totalb);
+void PrintHexSm (va_list *args, int *totalb, char *buffer ,int *index);
 
 typedef struct hex
 {
