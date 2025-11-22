@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 #include <stdarg.h>
-
+#define BUF_SIZE 1024
 
 
 /**
@@ -52,6 +52,8 @@ void PrintOctal (va_list *args, int *totalb, char *buffer ,int *index);
 void PrintHexCp (va_list *args, int *totalb, char *buffer ,int *index);
 
 void PrintHexSm (va_list *args, int *totalb, char *buffer ,int *index);
+
+void PrintNon(va_list *args, int *totalb, char *bufferr ,int *index);
 
 typedef struct hex
 {

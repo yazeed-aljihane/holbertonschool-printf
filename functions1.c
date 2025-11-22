@@ -181,3 +181,47 @@ void PrintHexSm (va_list *args, int *totalb, char *bufferr ,int *index)
  }
  }
 
+void PrintNon(va_list *args, int *totalb, char *bufferr ,int *index)
+{
+int i,j;
+char *string = va_arg(*args,char*);
+char buffer[BUF_SIZE];
+unsigned int tmp = 0;
+char *hex = "0123456789ABCDEF";
+
+for (i = 0; string[i]; i++)
+{
+	if (*index == 1024)
+	{
+write(1, bufferr,*index);
+*index = 0;
+	}
+	if ( (string[i] > 0 && string[i] < 32) || string[i] >= 127)
+	{
+tmp = (unsigned char)string[i];
+buffer[0] = '\\';
+buffer[1] = 'x';
+buffer[2] = hex[tmp / 16];
+buffer[3] = hex[(tmp % 16)];
+
+
+for (j = 0; j < 4; j++)
+{
+if (*index == 1024)
+{
+write(1, bufferr,*index);
+*index = 0;
+}
+bufferr[*index] = buffer[j];
+(*index)++;
+*totalb +=1;
+}
+}
+else
+{
+bufferr[*index] = string[i];
+(*index)++;
+*totalb += 1;
+}
+}
+}
