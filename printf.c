@@ -192,7 +192,7 @@ char buffer[BUF_SIZE];
 int index = 0;
 
 type tp[] = {{'c', PrintChar}, {'s', PrintString}, {'i', PrintNumber}, {'d', PrintNumber}, {'b', PrintBinary},{'u', PrintUdecmile},
-{'o', PrintOctal},{'X', PrintHexCp}, {'x', PrintHexSm} ,{'S', PrintNon},{'\0', NULL}};
+{'o', PrintOctal},{'X', PrintHexCp}, {'x', PrintHexSm} ,{'S', PrintNon},{'p',printpointer},{'\0', NULL}};
 
 if (format == NULL)
 	return (-1);

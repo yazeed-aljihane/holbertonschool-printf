@@ -55,6 +55,7 @@ void PrintHexSm (va_list *args, int *totalb, char *buffer ,int *index);
 
 void PrintNon(va_list *args, int *totalb, char *bufferr ,int *index);
 
+void printpointer(va_list *args, int *totalb, char *bufferr ,int *index);
 typedef struct hex
 {
 char letter;
