@@ -1,0 +1,100 @@
+
+
+.TH _PRINTF 3
+
+.SH NAME
+_printf - A custom function that prints the input text along with the variables.
+
+
+.SH SYNOPSIS
+.B #include "main.h"
+.P
+.B int _printf(const char *format, ...);
+
+
+
+.SH DESCRIPTION
+
+A custom function, designed as a project within the Holberton Foundation path, prints the text you enter with the desired variables based on the specifiers you
+enter.
+
+.TP
+.B %c
+Prints a single character.
+.TP
+.B %s
+Prints a string.
+.TP
+.B %S
+Prints a string with the Non printable characters in this format : \x (ascii value in hexaddecmile) .
+.TP
+.B %d
+Prints a signed decimal integer.
+.TP
+.B %i
+Prints a signed decimal integer.
+
+.TP
+.B %b
+Prints the number in binary.
+
+.TP
+.B %u
+Prints a unsigned decimal number.
+.TP
+.B %o
+Prints a number in octal.
+.TP
+.B %x
+Prints number in hexadecimal , the letters small.
+.TP
+.B %X
+Prints number in hexadecimal , the letters capital.
+.TP
+.B %p
+Prints an address in hexadecimal, the letters small.
+
+.TP
+.B %%
+Prints  %.
+
+.SH RETURN VALUE
+.B on success:
+print the output to screen and return the number of char printed successfully 
+.B on fail:
+dont print anything  and return -1.
+
+
+
+.SH EXAMPLES
+Example 1:
+we want to print the age of person
+_printf("The Age: %d\n", 32);
+the output:
+The Age: 32
+
+Example 2:
+we want to print the address of x.
+
+int x = 5;
+
+_printf("The Address: %p\n", &x);
+
+the output:
+
+The Address: 0xe6fe7d776c0
+
+
+.SH SEE ALSO
+.BR printf 3 ", "
+.BR fprintf 3 ", "
+.BR sprintf 3 ", "
+.BR scanf 3 ", "
+.BR write 2
+
+
+
+
+
+
+
