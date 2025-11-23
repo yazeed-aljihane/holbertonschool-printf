@@ -68,5 +68,4 @@ The code is designed to compile on Ubuntu 20.04 LTS using `gcc`.
 
 ## Authors
 
-* **[Yazeed Aljohani]** - [Github Profile](https://github.com/YourUsername)
-* **[Partner Name]** - [Github Profile](https://github.com/PartnerUsername)
+* **[Yazeed Aljohani]** - [yazeed-aljihane](https://github.com/yazeed-aljihane)
