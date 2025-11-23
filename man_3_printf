@@ -18,6 +18,8 @@ _printf - A custom function that prints the input text along with the variables.
 A custom function, designed as a project within the Holberton Foundation path, prints the text you enter with the desired variables based on the specifiers you
 enter.
 
+.SH SPECIFIERS
+
 .TP
 .B %c
 Prints a single character.
@@ -84,6 +86,8 @@ the output:
 
 The Address: 0xe6fe7d776c0
 
+.SH AUTHORS
+.B yazeed aljohani
 
 .SH SEE ALSO
 .BR printf 3 ", "

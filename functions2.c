@@ -9,7 +9,7 @@
 
 
 
-void printpointer (va_list *args, int *totalb, char *bufferr ,int *index)
+void PrintPointer(va_list *args, int *totalb, char *bufferr ,int *index)
 {
 void *ptr = va_arg(*args, void*);
 unsigned long addres;

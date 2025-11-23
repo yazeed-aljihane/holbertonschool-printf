@@ -8,15 +8,24 @@
  */
 int main(void)
 {
-int x = 5;
 
-_printf("%b", 1024);
-_printf("There is %b bytes in %b KB\n", 1024, 1);
+int len;
+unsigned int ui;
+void *addr;
+
+len = _printf("Let's try to printf a simple sentence.\n");
+ui = (unsigned int)INT_MAX + 1024;
+addr = (void *)0x7ffe637541f0;
+_printf("Length:[%d, %i]\n", len, len);
 _printf("Negative:[%d]\n", -762534);
+_printf("Unsigned:[%u]\n", ui);
+_printf("Unsigned octal:[%o]\n", ui);
+_printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
 _printf("Character:[%c]\n", 'H');
 _printf("String:[%s]\n", "I am a string !");
-printf("String:[%s]\n", "I am a string !");
- _printf("%S\n", "Best\nSchool");
- _printf("pointer: %p\n", &x);
+_printf("Address:[%p]\n", addr);
+len = _printf("Percent:[%%]\n");
+_printf("Len:[%d]\n", len);
+_printf("Unknown:[%r]\n");
 return (0);
 }
